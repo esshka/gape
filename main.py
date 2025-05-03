@@ -4,7 +4,7 @@ using Agno agents for prompt evolution and evaluation.
 """
 import os
 import time
-from agno.models.anthropic import Claude
+from agno.models.google import Gemini
 
 # Import our GAPE components
 from gape_core import Prompt, Population
@@ -43,8 +43,8 @@ class GAPE:
         self.elitism_count = elitism_count
         self.selection_method = selection_method
         
-        # Initialize models (default to Claude)
-        self.target_model = target_model or Claude(id="claude-3-7-sonnet-latest")
+        # Initialize models (default to Gemini)
+        self.target_model = target_model or Gemini(id="gemini-2.0-flash")
         self.evaluation_model = evaluation_model or self.target_model
         self.mutation_model = mutation_model or self.target_model
         
@@ -172,8 +172,8 @@ def main():
     # Demonstrate the best prompt in action
     print("Generating a final story using the best prompt...")
     from agno.agent import Agent
-    final_agent = Agent(model=Claude(id="claude-3-7-sonnet-latest"))
-    final_story = final_agent.get_response(best_prompt.text)
+    final_agent = Agent(model=Gemini(id="gemini-2.0-flash"))
+    final_story = final_agent.run(best_prompt.text).content
     
     print("\nFINAL STORY GENERATED WITH THE BEST PROMPT:")
     print("=" * 80)

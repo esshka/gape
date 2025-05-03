@@ -3,14 +3,14 @@ Prompt mutation and crossover module for the GAPE framework.
 Uses Agno agents to generate variations of prompts through mutation and crossover operations.
 """
 from agno.agent import Agent
-from agno.models.anthropic import Claude
+from agno.models.google import Gemini
 
 
 class MutationEngine:
     """Handles prompt mutation and crossover operations using Agno agents."""
     
     def __init__(self, model=None):
-        self.model = model or Claude(id="claude-3-7-sonnet-latest")
+        self.model = model or Gemini(id="gemini-2.0-flash")
         self.agent = Agent(
             model=self.model,
             instructions=[
@@ -44,7 +44,7 @@ class MutationEngine:
         mutation_prompt = mutation_prompts.get(mutation_type, mutation_prompts["random"])
         
         # Generate the mutated prompt
-        mutated_text = self.agent.get_response(mutation_prompt)
+        mutated_text = self.agent.run(mutation_prompt).content
         
         # Return a new Prompt object (importing from local module)
         from gape_core import Prompt
@@ -65,7 +65,7 @@ class MutationEngine:
         Each offspring should be different and combine different aspects of the parents.
         """
         
-        response = self.agent.get_response(crossover_prompt)
+        response = self.agent.run(crossover_prompt).content
         
         # Parse the response to extract the two offspring
         offspring_texts = []

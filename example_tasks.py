@@ -6,7 +6,7 @@ to demonstrate how GAPE can be used across different applications.
 """
 from main import GAPE
 from agno.agent import Agent
-from agno.models.anthropic import Claude
+from agno.models.google import Gemini
 
 
 # Example task definitions, each with task_description and seed_prompt
@@ -99,9 +99,9 @@ def run_example(task_key, generations=3, population_size=8, verbose=True):
     if verbose:
         # Show the output generated with the best prompt
         print("\nGenerating output with the best prompt...")
-        model = Claude(id="claude-3-7-sonnet-latest")
+        model = Gemini(id="gemini-2.0-flash")
         agent = Agent(model=model)
-        output = agent.get_response(best_prompt.text)
+        output = agent.chat(best_prompt.text)
         
         print("\nFINAL OUTPUT GENERATED WITH THE BEST PROMPT:")
         print("=" * 80)

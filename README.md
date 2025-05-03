@@ -23,22 +23,43 @@ cd gape
 pip install -r requirements.txt
 ```
 
+## API Key Setup
+
+GAPE requires an API key for Google's Gemini model. You'll need to:
+
+1. Obtain a Google API key from Google AI Studio (https://makersuite.google.com/)
+2. Set the environment variable:
+
+```bash
+# On Linux/Mac
+export GOOGLE_API_KEY=your_api_key_here
+
+# On Windows (Command Prompt)
+set GOOGLE_API_KEY=your_api_key_here
+
+# On Windows (PowerShell)
+$env:GOOGLE_API_KEY="your_api_key_here"
+```
+
 ## Usage
+
+GAPE requires an Agno setup with access to a Google Gemini model. By default, it uses the Gemini 2.0 Flash model.
+
+Basic usage:
 
 ```python
 from main import GAPE
 
 # Define your task
 task_description = """
-The goal is to create a prompt that will make an LLM generate a detailed analysis 
-of climate change impacts, including scientific data, economic effects, and policy 
-recommendations. The output should be comprehensive, well-structured, and factually accurate.
+The goal is to create a prompt that will make an LLM write a creative story
+with interesting characters and a surprise ending.
 """
 
-# Initial seed prompt
+# Create a seed prompt
 seed_prompt = """
-Write a detailed analysis of climate change impacts, including scientific data, 
-economic effects, and policy recommendations.
+Write a creative short story with a surprise ending.
+Keep it between 300-500 words.
 """
 
 # Create and run GAPE
@@ -46,49 +67,66 @@ gape = GAPE(
     task_description=task_description,
     seed_prompt=seed_prompt,
     population_size=10,
-    generations=5,
-    mutation_rate=0.3,
-    crossover_rate=0.7
+    generations=5
 )
 
-# Run the evolutionary process
+# Run the evolution process
 best_prompt = gape.run()
 
 # The best_prompt object contains the optimized prompt
-print(f"Best prompt:\n{best_prompt.text}")
+print(f"Best prompt: {best_prompt.text}")
 print(f"Fitness score: {best_prompt.fitness}")
 ```
 
-## Architecture
+## Example Tasks
 
-The framework consists of four main Python modules:
+The `example_tasks.py` file contains several example tasks showing how GAPE can be used for different applications:
 
-1. `gape_core.py` - Core components (Prompt and Population classes)
-2. `fitness_evaluator.py` - Uses Agno agents to evaluate prompt outputs
-3. `prompt_mutators.py` - LLM-based prompt mutation and crossover operations
-4. `main.py` - The main GAPE implementation and example usage
+```bash
+# Run the creative story example
+python example_tasks.py creative_story
+
+# Or specify directly in your code
+from example_tasks import run_example
+results = run_example("scientific_explanation", generations=3, population_size=8)
+```
 
 ## Customization
 
-You can customize GAPE for different tasks by:
+You can customize various aspects of GAPE:
 
-- Modifying the task description and seed prompt
-- Adjusting genetic algorithm parameters (population size, generations, mutation/crossover rates)
-- Creating custom mutation strategies in the `MutationEngine` class
-- Implementing specialized fitness functions for specific requirements
+- Use different models for different components
+- Adjust genetic algorithm parameters
+- Implement custom fitness functions
+- Define your own mutation strategies
 
-## Dependencies
+Example:
 
-- [Agno](https://docs.agno.com/) - For building and managing LLM agents
-- [Anthropic](https://www.anthropic.com/) - For Claude models (via Agno)
+```python
+from agno.models.google import Gemini
+from main import GAPE
 
-## Example Applications
+# Use a specific Google Gemini model
+my_model = Gemini(id="gemini-2.0-flash")
 
-- Content generation optimization
-- Code generation prompt refinement
-- Query-answering optimization
-- Creative writing prompt evolution
+gape = GAPE(
+    task_description="Your task description",
+    seed_prompt="Your seed prompt",
+    target_model=my_model,
+    mutation_rate=0.4,
+    crossover_rate=0.6,
+    elitism_count=2
+)
+```
+
+## How It Works
+
+1. **Initialization**: GAPE starts with a seed prompt and creates initial variations
+2. **Evaluation**: Each prompt is evaluated using an LLM to generate output and scoring the result
+3. **Selection**: Prompts with higher fitness scores are more likely to be selected for reproduction
+4. **Reproduction**: New prompts are created through mutation and crossover operations
+5. **Evolution**: The process repeats for multiple generations, with the population improving over time
 
 ## License
 
-MIT 
+[Your license information here] 

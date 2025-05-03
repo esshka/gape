@@ -3,8 +3,7 @@ Fitness evaluation module for the GAPE framework.
 Uses Agno agents to evaluate the quality of prompts based on their generated outputs.
 """
 from agno.agent import Agent
-from agno.models.anthropic import Claude
-from agno.tools.reasoning import ReasoningTools
+from agno.models.google import Gemini
 
 
 class FitnessEvaluator:
@@ -14,14 +13,14 @@ class FitnessEvaluator:
         self.task_description = task_description
         
         # Target model that will execute the prompts
-        self.target_model = target_model or Claude(id="claude-3-7-sonnet-latest")
+        self.target_model = target_model or Gemini(id="gemini-2.0-flash")
         self.target_agent = Agent(model=self.target_model)
         
         # Evaluation model that will score the outputs
-        self.evaluation_model = evaluation_model or Claude(id="claude-3-7-sonnet-latest")
+        self.evaluation_model = evaluation_model or Gemini(id="gemini-2.0-flash")
         self.evaluation_agent = Agent(
             model=self.evaluation_model,
-            tools=[ReasoningTools(add_instructions=True)],
+           
             instructions=[
                 "Your task is to evaluate the quality of an output based on specific criteria.",
                 "Rate the output on a scale of 0-100 where 100 is perfect.",
@@ -32,7 +31,7 @@ class FitnessEvaluator:
     def evaluate_prompt(self, prompt):
         """Evaluate a single prompt and return its fitness score."""
         # Generate output using the target model
-        output = self.target_agent.get_response(prompt.text)
+        output = self.target_agent.run(prompt.text).content
         
         # Evaluate the output using the evaluation model
         eval_prompt = f"""
@@ -45,7 +44,7 @@ class FitnessEvaluator:
         Score from 0-100:
         """
         
-        score = self.evaluation_agent.get_response(eval_prompt)
+        score = self.evaluation_agent.run(eval_prompt).content
         
         # Extract numerical score (handling potential non-numeric responses)
         try:
