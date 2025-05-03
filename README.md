@@ -127,6 +127,66 @@ gape = GAPE(
 4. **Reproduction**: New prompts are created through mutation and crossover operations
 5. **Evolution**: The process repeats for multiple generations, with the population improving over time
 
+## Example
+
+```
+(venv) ➜  gape git:(main) ✗ python main.py
+Initializing population with 8 prompts...
+Evaluating population fitness (Generation 0)...
+Generation 0 stats:
+  Best fitness: 0.9000
+  Average fitness: 0.1125
+Evolving to generation 1...
+Evaluating population fitness (Generation 1)...
+Generation 1 stats:
+  Best fitness: 0.9500
+  Average fitness: 0.3500
+Evolving to generation 2...
+Evaluating population fitness (Generation 2)...
+Generation 2 stats:
+  Best fitness: 0.9500
+  Average fitness: 0.6162
+Evolving to generation 3...
+Evaluating population fitness (Generation 3)...
+Generation 3 stats:
+  Best fitness: 0.9500
+  Average fitness: 0.4562
+
+GAPE completed in 454.66 seconds
+Ran for 3 generations
+Best prompt found (fitness: 0.9500):
+
+The Final Sentence Revelation**
+
+> Write a short story (300-500 words) about a character with a specific, peculiar obsession or daily ritual. Depict this character in a typical, everyday situation, meticulously showcasing their routine and habits. The challenge: the *very last sentence* of your story must completely redefine the character and their motivations, revealing a hidden truth, a surprising vulnerability, or a shocking motivation behind their behavior. This final sentence should act as a twist, forcing the reader to re-evaluate everything they've just read and understand the character in a completely new light.
+
+**Why this is effective:** This prompt leverages the constraint-based approach of Variation 4 while adding the character detail from Variation 2. It sets up a clear challenge for the writer (the final sentence reveal) and pushes them to focus on character development and impactful storytelling. The "typical, everyday situation" helps to create a strong contrast with the final revelation.
+
+================================================================================
+BEST PROMPT:
+Prompt(fitness=0.95, text='The Final Sentence Revelation**
+
+> Write a short s...')
+================================================================================
+Generating a final story using the best prompt...
+
+FINAL STORY GENERATED WITH THE BEST PROMPT:
+================================================================================
+Agnes clutched her reusable grocery bag, its canvas worn soft from years of loyal service. Each Tuesday, rain or shine, she visited Farmer McGregor's stall at precisely 10:17 am. It wasn't just about the fresh produce; it was about the ritual.
+
+First, the apples. Three Granny Smiths, selected with the discerning eye of a seasoned fruit connoisseur. She'd tap each one lightly, listening for the perfect, almost imperceptible thud. Then, the carrots. Always five, plump and vibrant orange, each carefully aligned like soldiers ready for inspection. She'd check for blemishes, a single spot of brown being enough to disqualify the entire bunch. Finally, the basil. Three sprigs, fragrant and bright green, their leaves perfect and untorn. McGregor knew her order by heart, a slight smile playing on his lips as he assembled her usual selection.
+
+Agnes paid in exact change, counted out meticulously from a small, floral-patterned coin purse. No crumpled bills, no modern cards. Precision was paramount. Back home, she'd lay the produce on a clean, white linen cloth. The apples were polished to a mirror sheen, the carrots scrubbed until they squeaked, and the basil leaves gently wiped with a damp cloth.
+
+Then came the chopping. Each apple was quartered with mathematical precision, the core carefully removed and discarded. The carrots were diced into uniform cubes, a perfect grid of orange against the white of the cutting board. And the basil? Minced so finely it almost disappeared, a fragrant green dust clinging to the blade.
+
+This meticulous preparation took hours, each step performed with a concentration that bordered on religious devotion. Finally, everything was ready. She’d arrange the ingredients in three identical bowls, add a dash of olive oil and a whisper of salt, and set them outside her back door, carefully spaced apart.
+
+For years, her neighbours had quietly speculated about Agnes and her peculiar Tuesdays. They whispered about her obsession with order, her strange routines, her solitary life. They chalked it up to eccentricity, a harmless quirk in an otherwise unremarkable woman. But the truth was, Agnes wasn't obsessed with order; she was terrified of chaos, a chaos that had swallowed her whole twenty years ago, on the very day her identical triplets went missing during a school picnic.
+
+================================================================================
+```
+
 ## License
 MIT License
 

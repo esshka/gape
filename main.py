@@ -45,7 +45,7 @@ class GAPE:
         
         # Initialize models (default to Gemini)
         self.target_model = target_model or Gemini(id="gemini-2.0-flash")
-        self.evaluation_model = evaluation_model or self.target_model
+        self.evaluation_model = evaluation_model or Gemini(id="gemini-2.5-pro-preview-03-25")
         self.mutation_model = mutation_model or self.target_model
         
         # Initialize components
@@ -168,6 +168,11 @@ def main():
     )
     
     best_prompt = gape.run()
+
+    print("=" * 80)
+    print("BEST PROMPT:")
+    print(best_prompt)
+    print("=" * 80)
     
     # Demonstrate the best prompt in action
     print("Generating a final story using the best prompt...")
